@@ -5,6 +5,4 @@ sealed class CalculatorAction {
     data class Operator(val symbol: String) : CalculatorAction()
     object Dot : CalculatorAction()
     object Equals: CalculatorAction()
-    object Clear: CalculatorAction()
-    object ClearAll: CalculatorAction()
 }

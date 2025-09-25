@@ -14,11 +14,10 @@ class CalculatorViewModel : ViewModel() {
     fun onAction(action: CalculatorAction) {
         when(action) {
             is CalculatorAction.Digit -> onDigit(value = action.value)
+            is CalculatorAction.Equals -> onEquals()
             is CalculatorAction.Operator -> onOperator(symbol = action.symbol)
             is CalculatorAction.Dot -> onDot()
-            is CalculatorAction.Equals -> onEquals()
-            is CalculatorAction.Clear -> onClear()
-            is CalculatorAction.ClearAll -> onClearAll()
+
         }
     }
 
@@ -38,6 +37,7 @@ class CalculatorViewModel : ViewModel() {
     private fun onClear() {
         TODO("Not yet implemented")
     }
+
     private fun onClearAll() {
         TODO("Not yet implemented")
     }

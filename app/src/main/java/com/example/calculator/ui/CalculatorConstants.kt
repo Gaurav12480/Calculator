@@ -28,9 +28,9 @@ val buttons = listOf(
         CalculatorButtonModel(R.string.minus, CalculatorAction.Operator("-"))
     ),
     listOf(
-        CalculatorButtonModel(R.string.dot, CalculatorAction.Operator(".")),
+        CalculatorButtonModel(R.string.dot, CalculatorAction.Dot),
         CalculatorButtonModel(R.string.num_0, CalculatorAction.Digit(0)),
         CalculatorButtonModel(R.string.plus, CalculatorAction.Operator("+")),
-        CalculatorButtonModel(R.string.equals, CalculatorAction.Operator("="))
+        CalculatorButtonModel(R.string.equals, CalculatorAction.Equals)
     )
 )
