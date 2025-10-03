@@ -1,7 +1,6 @@
 package com.example.calculator.ui
 
 import androidx.lifecycle.ViewModel
-import com.example.calculator.ui.CalculatorAction
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,9 +20,13 @@ class CalculatorViewModel : ViewModel() {
         }
     }
 
+    private lateinit var currentEquation: String
 
-    private fun onDigit(value: Int) {
-        TODO("Not yet implemented")
+     private fun onDigit(value: String) {
+         _uiState.value.copy(
+             num1 = value
+         )
+        currentEquation += _uiState.value.num1
     }
     private fun onOperator(symbol: String) {
         TODO("Not yet implemented")
@@ -41,12 +44,4 @@ class CalculatorViewModel : ViewModel() {
     private fun onClearAll() {
         TODO("Not yet implemented")
     }
-
-
-
-
-
-
-
-
 }
