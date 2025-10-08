@@ -27,13 +27,11 @@ class MainActivity : ComponentActivity() {
             CalculatorTheme {
                 Surface(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .safeContentPadding(),
+                        .fillMaxSize(),
                     color = MaterialTheme.colorScheme.surface
                 ) {
                     CalculatorScreen()
                 }
-
             }
         }
     }

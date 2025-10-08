@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -45,7 +46,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.FontScaling
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -60,6 +63,7 @@ fun CalculatorScreen(modifier: Modifier = Modifier,
     Column (
         modifier = modifier
             .fillMaxSize()
+            .safeContentPadding()
             .padding(20.dp),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -75,7 +79,11 @@ fun CalculatorScreen(modifier: Modifier = Modifier,
                 .fillMaxWidth()
 
         ) {
-            Text(text = calculatorUiState.output, fontSize = 60.sp, color = MaterialTheme.colorScheme.onBackground)
+            Text(
+                text = calculatorUiState.num1 + (calculatorUiState.op
+                    ?: "") + calculatorUiState.num2,
+                fontSize = 60.sp,
+            )
         }
 
         //Cancel Button
@@ -85,7 +93,7 @@ fun CalculatorScreen(modifier: Modifier = Modifier,
             ,
             horizontalArrangement = Arrangement.End
         ){
-            CancelButton(modifier = Modifier, onClick = {}, onLongClick = {}, text = R.string.cancel)
+            CancelButton(modifier = Modifier, onClick = { calculatorViewModel.onClear() }, onLongClick = { calculatorViewModel.onClearAll() }, text = R.string.cancel)
         }
 
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), thickness = 2.dp, DividerDefaults.color)
@@ -94,8 +102,7 @@ fun CalculatorScreen(modifier: Modifier = Modifier,
         buttons.forEach { row ->
             Row (
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(4.dp),
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ){
                 row.forEach { ele ->
@@ -107,7 +114,9 @@ fun CalculatorScreen(modifier: Modifier = Modifier,
                                     containerColor = MaterialTheme.colorScheme.secondary),
                                 modifier = Modifier
                                     .weight(1f)       //Stretches to fill width
-                                    .aspectRatio(1f)    //Makes height equal to width
+                                    .aspectRatio(1f), //Makes height equal to width
+                                onClick = { calculatorViewModel.onAction(ele.action) }
+
                             )
                         }
                         CalculatorAction.Equals -> {
@@ -118,7 +127,8 @@ fun CalculatorScreen(modifier: Modifier = Modifier,
                                     containerColor = MaterialTheme.colorScheme.primary),
                                 modifier = Modifier
                                     .weight(1f)
-                                    .aspectRatio(1f)
+                                    .aspectRatio(1f),
+                                onClick = { calculatorViewModel.onAction(ele.action) }
                             )
                         }
                         is CalculatorAction.Operator, CalculatorAction.Dot -> {
@@ -129,7 +139,8 @@ fun CalculatorScreen(modifier: Modifier = Modifier,
                                     containerColor = MaterialTheme.colorScheme.onTertiary),
                                 modifier = Modifier
                                     .weight(1f)
-                                    .aspectRatio(1f)
+                                    .aspectRatio(1f),
+                                onClick = { calculatorViewModel.onAction(ele.action) }
                             )
                         }
                     }
@@ -140,9 +151,9 @@ fun CalculatorScreen(modifier: Modifier = Modifier,
 }
 
 @Composable
-fun CalculatorButton(modifier: Modifier = Modifier, calculatorButtonModel: CalculatorButtonModel, buttonColors: ButtonColors) {
+fun CalculatorButton(modifier: Modifier = Modifier, calculatorButtonModel: CalculatorButtonModel, buttonColors: ButtonColors, onClick: ()-> Unit) {
     Button(
-        onClick = { calculatorButtonModel.action },
+        onClick = onClick,
         modifier = modifier
             .padding(4.dp)
         ,
@@ -170,29 +181,6 @@ fun CancelButton(modifier: Modifier, onClick: () -> Unit, onLongClick: () -> Uni
         fontSize = 38.sp,
         modifier = modifier
             .combinedClickable(onClick = onClick, onLongClick = onLongClick)
-    )
-}
-
-@Composable
-fun CalculationOutput(modifier: Modifier = Modifier, onValueChange: () -> Unit) {
-    TextField(
-        value = "",
-        onValueChange = { onValueChange },
-        readOnly = true,
-        singleLine = true,
-        modifier = modifier
-            .fillMaxWidth()
-            .size(80.dp),
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent,
-            disabledContainerColor = Color.Transparent,
-            errorContainerColor = Color.Transparent,
-            focusedIndicatorColor= Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
-            errorIndicatorColor = Color.Transparent
-        )
     )
 }
 
