@@ -1,5 +1,7 @@
 package com.example.calculator.ui
 
+import androidx.compose.material3.Switch
+import androidx.compose.runtime.currentComposer
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,15 +26,13 @@ class CalculatorViewModel : ViewModel() {
         private const val MAX_NUM_DIGIT = 8
     }
 
-    private lateinit var currentEquation: String
-
      private fun onDigit(value: String) {
          _uiState.update { currentState ->
              if (currentState.op == null) {
                  if (currentState.num1.length <= MAX_NUM_DIGIT) currentState.copy(num1 = currentState.num1 + value)
                  else currentState
              }
-             else{
+             else {
                  if (currentState.num2.length <= MAX_NUM_DIGIT) currentState.copy(num2 = currentState.num2 + value)
                  else currentState
              }
@@ -52,7 +52,14 @@ class CalculatorViewModel : ViewModel() {
         TODO("Not yet implemented")
     }
     fun onClear() {
-        TODO("Not yet implemented")
+        _uiState.update { currentState ->
+            when {
+                currentState.num2 != "" -> currentState.copy(num2 = currentState.num2.dropLast(1))
+                currentState.op != null -> currentState.copy(op = null)
+                currentState.num1 != "" -> currentState.copy(num1 = currentState.num1.dropLast(1))
+                else -> currentState
+            }
+        }
     }
 
     fun onClearAll() {
