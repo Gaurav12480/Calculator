@@ -1,7 +1,5 @@
 package com.example.calculator.ui
 
-import androidx.compose.material3.Switch
-import androidx.compose.runtime.currentComposer
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,16 +38,43 @@ class CalculatorViewModel : ViewModel() {
      }
     private fun onOperator(symbol: String) {
         _uiState.update { currentState ->
-            if (currentState.num1.isNotEmpty()) currentState.copy(op = symbol)
+            if (currentState.num1.isNotEmpty() && currentState.op == null) currentState.copy(op = symbol)
             else currentState
         }
     }
 
     private fun onDot() {
-        TODO("Not yet implemented")
+        _uiState.update { currentState ->
+            if (currentState.op == null && (!currentState.num1.contains("."))) {
+                if (currentState.num1.isEmpty()) currentState.copy(num1 = currentState.num1 + "0.")
+                else currentState.copy(num1 = currentState.num1 + ".")
+            }
+            else if (currentState.op != null && (!currentState.num2.contains("."))) {
+                if (currentState.num2.isEmpty())currentState.copy(num2 = currentState.num2 + "0.")
+                else currentState.copy(num2 = currentState.num2 + ".")
+            }
+            else {
+                currentState
+            }
+        }
     }
     private fun onEquals() {
-        TODO("Not yet implemented")
+        _uiState.update { currentState ->
+            if (currentState.op != null && currentState.num2.isNotEmpty()) {
+                val n1 = currentState.num1.toFloat()
+                val n2 = currentState.num2.toFloat()
+                when(currentState.op) {
+                    "+" -> currentState.copy(num1 = (n1 + n2).toString(), num2 = "", op = null)
+                    "-" -> currentState.copy(num1 = (n1 - n2).toString(), num2 = "", op = null)
+                    "*" -> currentState.copy(num1 = (n1 * n2).toString(), num2 = "", op = null)
+                    else -> if (n2 != 0f) currentState.copy(num1 = (n1 / n2).toString(), num2 = "", op = null) else currentState
+                }
+            }
+            else {
+                currentState
+
+            }
+        }
     }
     fun onClear() {
         _uiState.update { currentState ->

@@ -5,5 +5,4 @@ data class CalculatorState (
     val num2: String = "",
     val op: String? = null,
     ) {
-
 }
