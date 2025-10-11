@@ -42,7 +42,7 @@ fun CalculatorScreen(modifier: Modifier = Modifier,
         modifier = modifier
             .fillMaxSize()
             .safeContentPadding()
-            .padding(20.dp),
+            .padding(4.dp),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -142,8 +142,7 @@ fun CalculatorButton(modifier: Modifier = Modifier, calculatorButtonModel: Calcu
     Button(
         onClick = onClick,
         modifier = modifier
-            .padding(4.dp)
-        ,
+            .padding(4.dp),
         colors = ButtonDefaults.buttonColors(
             contentColor = buttonColors.contentColor,
             containerColor = buttonColors.containerColor

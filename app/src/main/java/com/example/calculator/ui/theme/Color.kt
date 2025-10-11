@@ -1,7 +1,7 @@
 package com.example.calculator.ui.theme
 import androidx.compose.ui.graphics.Color
 
-val primaryLight = Color(0xFFDF8000)
+val primaryLight = Color(0xFFF08000)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFFF9500)
 val onPrimaryContainerLight = Color(0xFF643700)
@@ -109,7 +109,7 @@ val surfaceContainerLightHighContrast = Color(0xFFE2E2E2)
 val surfaceContainerHighLightHighContrast = Color(0xFFD4D4D4)
 val surfaceContainerHighestLightHighContrast = Color(0xFFC6C6C6)
 
-val primaryDark = Color(0xFFFFBD7F)
+val primaryDark = Color(0xFFF08000)
 val onPrimaryDark = Color(0xFF4B2800)
 val primaryContainerDark = Color(0xFFFF9500)
 val onPrimaryContainerDark = Color(0xFF643700)

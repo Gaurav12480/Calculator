@@ -66,7 +66,7 @@ class CalculatorViewModel : ViewModel() {
                 when(currentState.op) {
                     "+" -> currentState.copy(num1 = (n1 + n2).toString(), num2 = "", op = null)
                     "-" -> currentState.copy(num1 = (n1 - n2).toString(), num2 = "", op = null)
-                    "*" -> currentState.copy(num1 = (n1 * n2).toString(), num2 = "", op = null)
+                    "×" -> currentState.copy(num1 = (n1 * n2).toString(), num2 = "", op = null)
                     else -> if (n2 != 0f) currentState.copy(num1 = (n1 / n2).toString(), num2 = "", op = null) else currentState
                 }
             }
